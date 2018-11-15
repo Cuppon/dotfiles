@@ -49,7 +49,8 @@ bindsym $mod+$sup+Escape mode "Passthrough Mode - Press Alt+F12 to exit"
 
 # start a terminal
 #bindsym $mod+Return exec i3-sensible-terminal
-bindsym $mod+Return exec --no-startup-id gnome-terminal
+# bindsym $mod+Return exec --no-startup-id gnome-terminal
+bindsym $mod+Return exec --no-startup-id kitty
 # bindsym $mod+Return exec --no-startup-id termite
 # bindsym $mod+Return exec --no-startup-id lxterminal
 
@@ -287,6 +288,7 @@ for_window [title="*Hangouts is sharing your screen*"] floating enable
 for_window [title="Friends List"] floating enable
 for_window [title="Steam - News"] floating enable
 for_window [title="[^Steam]" class="Steam"] floating enable
+for_window [class="pavucontrol"] floating enable
 
 gaps inner 20
 # gaps outer 5
@@ -298,7 +300,7 @@ gaps inner 20
 # exec --no-startup-id i3-msg 'workspace 10; exec virtualbox'
 
 # fix the monitor
-# exec --no-startup-id $HOME/.screenlayout/othree.sh
+exec --no-startup-id $HOME/.screenlayout/layout.sh
 # polybar
 # exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 

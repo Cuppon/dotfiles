@@ -1,5 +1,5 @@
 
-export EDITOR=/usr/bin/nano
+export EDITOR=/usr/bin/vim
 export QT_QPA_PLATFORMTHEME="qt5ct"
 export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
 
@@ -8,16 +8,20 @@ if [ -d "$HOME/.local/bin" ]; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
-export PATH="$PATH:$HOME/local/bin"
+PATH="$PATH:$HOME/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+PATH="$PATH:$HOME/dotfiles/vim/bundle/powerline/scripts"
+PATH="$PATH:/usr/games"
+PATH="$PATH:/usr/bin/core_perl"
+PATH="$PATH:/opt/android-studio/bin"
+# path="$path:/$HOME/Android/Sdk/platform-tools"
+PATH="$PATH:$HOME/go/bin"
+PATH="$PATH:$HOME/.npm-global/bin"
+PATH="$PATH:$HOME/.local/share/JetBrains/Toolbox/bin"
 
-xmodmap -e 'clear Lock' #ensures you're not stuck in CAPS on mode
-xmodmap -e 'keycode 0x42=Escape' #remaps the keyboard so CAPS LOCK=ESC
-
-# if hash setxkbmap 2>/dev/null; then
-#     setxkbmap -option 'caps:ctrl_modifier'
-# else
-#     echo "no setxkbmap"
-# fi
+export PATH=$PATH
+# remove duplicate entrys from path
+# path=$(printf "%s" "$PATH" | awk -v RS=':' '!a[$1]++ { if (NR > 1) printf RS; printf $1 }')
+# export PATH=$path
 
 
 # if hash xcape 2>/dev/null; then
@@ -34,12 +38,8 @@ xmodmap -e 'keycode 0x42=Escape' #remaps the keyboard so CAPS LOCK=ESC
 
 # ANDROID_EMULATOR_USE_SYSTEM_LIBS=1
 
-path="$PATH/dotfiles/vim/bundle/powerline/scripts:$HOME/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
-path="$path:/usr/games"
-path="$path:/usr/bin/core_perl"
 # path="$path:/opt/android-studio/bin"
 # path="$path:/opt/android-studio-3/bin"
-export PATH=$path
 # xrandr --output eDP1 --auto --left-of HDMI3 --output HDMI3 --auto --scale 2x2 --right-of DP1
 # xrandr --output eDP1 --mode 1920x1200 --left-of HDMI3 --output HDMI3  --right-of DP1
 # xrandr --output eDP1 --mode 2560x1600 --left-of HDMI3 --output HDMI3  --right-of DP1
@@ -50,11 +50,20 @@ export PATH=$path
 # mac keyboard remap
 # xmodmap ~/.xmodmaprc
 # synclient HorizTwoFingerScroll=1 HorizEdgeScroll=0 VertEdgeScroll=0 VertScrollDelta=-247 HorizScrollDelta=-247
+xmodmap -e 'clear Lock' #ensures you're not stuck in CAPS on mode
+xmodmap -e 'keycode 0x42=Escape' #remaps the keyboard so CAPS LOCK=ESC
+
 setxkbmap -option ctrl:nocaps
 xmodmap -e "keycode 66 = Escape NoSymbol Escape"
-/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 
-# sh ~/.screenlayout/layout.sh
+# TODO: set up this to be started by a daemon something or other
+# this is probably not a great idea
+polkitbin='/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1'
+
+if [ -f "$polkitbin" ]; then
+  $polkitbin &
+fi
+
 # workaround for annoying thing
 # killall pulseaudio
 # alsa force-reload
