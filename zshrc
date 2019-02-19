@@ -83,12 +83,16 @@ path="$path:/opt/android-studio/bin"
 path="$path:/$HOME/go/bin"
 path="$path:$HOME/.local/bin"
 path="$path:$HOME/.npm-global/bin"
+path="/Library/Frameworks/Python.framework/Versions/2.7/bin:${path}"
+path="$path:/usr/local/mysql/bin"
+path=$path:~/.composer/vendor/bin
 export PATH=$path
 # export PATH="$HOME/dotfiles/vim/bundle/powerline/scripts:$HOME/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 # export MANPATH="/usr/local/man:$MANPATH"
 export GIT_EDITOR=vim
 export EDITOR=vim
 export VISUAL=vim
+export GOPATH=$HOME/go
 
 
 # You may need to manually set your language environment
@@ -145,23 +149,6 @@ function extract {
   fi
 }
 
-# rotate video with ffmpeg
-function rotate() {
-  ffmpeg -i "$1" -c copy -metadata:s:v:0 rotate=180 "$2"
-}
-#hoping that this fixes the annoying issue when it doesn't workO
-# if hash setxkbmap 2>/dev/null; then
-#     # disable caps lock if it's on just in case
-#     python -c 'from ctypes import *; X11 = cdll.LoadLibrary("libX11.so.6"); display = X11.XOpenDisplay(None); X11.XkbLockModifiers(display, c_uint(0x0100), c_uint(2), c_uint(0)); X11.XCloseDisplay(display)'
-#     setxkbmap -option 'caps:ctrl_modifier'
-# fi
-
-#temp workaround for microphone volume issue
-if hash amixer 2>/dev/null; then
-    NOPe=`amixer -c 1 set Capture 20 2>/dev/null`
-else
-    # echo "no amixer"
-fi
 
 # including this ensures that new gnome-terminal tabs keep the parent `pwd` !
 if [ -e /etc/profile.d/vte.sh ]; then
